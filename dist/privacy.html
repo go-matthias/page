@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - My Personal Blog</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <style>
         :root {
-            --max-width: 900px;
-            --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --color-text: #1d1d1f;
-            --color-secondary: #86868b;
-            --color-date: #86868b;
-            --spacing-section: 6rem;
+            --background: #1a1a1a;
+            --text: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent: #c5ff3d;
+            --nav-height: 80px;
         }
 
         * {
@@ -22,178 +20,122 @@
         }
 
         body {
-            font-family: var(--font-main);
-            line-height: 1.5;
-            color: var(--color-text);
-            background: #fff;
-            font-size: 18px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
-            max-width: var(--max-width);
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
-        header {
-            padding: 2rem 0;
-            margin-bottom: var(--spacing-section);
-        }
-
-        .site-header {
+        nav {
+            height: var(--nav-height);
+            padding: 0 2rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 2rem;
+            justify-content: space-between;
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
         }
 
-        .site-title {
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: var(--color-text);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        nav a {
-            color: var(--color-text);
-            text-decoration: none;
-            margin-left: 2.5rem;
-            font-size: 1rem;
-            font-weight: 400;
-        }
-
-        nav a:hover {
-            color: var(--color-secondary);
-        }
-
-        /* Home page specific styles */
-        .home {
-            padding-top: 2rem;
-        }
-
-        .intro {
-            margin-bottom: var(--spacing-section);
-            max-width: 38rem;
-        }
-
-        .intro h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 1.5rem;
-        }
-
-        .intro p {
+        .logo {
             font-size: 1.5rem;
-            line-height: 1.4;
-            color: var(--color-secondary);
-            font-weight: 400;
-            letter-spacing: -0.2px;
-        }
-
-        .posts {
-            margin-bottom: var(--spacing-section);
-        }
-
-        .posts h2 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 3rem;
-            letter-spacing: -0.3px;
-        }
-
-        /* Post preview on home page */
-        .post-preview {
-            margin-bottom: 4rem;
-            display: grid;
-            grid-template-columns: 8rem 1fr;
-            gap: 2rem;
-            align-items: start;
-        }
-
-        .post-preview .post-date {
-            font-size: 1rem;
-            color: var(--color-date);
-            margin: 0;
-            padding-top: 0.5rem;
-        }
-
-        .post-preview h2 {
-            font-size: 2rem;
-            line-height: 1.2;
-            margin: 0 0 1rem;
-            letter-spacing: -0.3px;
-        }
-
-        .post-preview h2 a {
-            color: var(--color-text);
+            font-weight: 500;
+            color: var(--text);
             text-decoration: none;
         }
 
-        .post-preview h2 a:hover {
-            color: var(--color-secondary);
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
         }
 
-        .post-preview p {
-            font-size: 1.125rem;
-            line-height: 1.5;
-            color: var(--color-secondary);
-            margin: 0;
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
 
-        /* Individual post page styles */
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .contact-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        main {
+            padding-top: var(--nav-height);
+            min-height: 100vh;
+        }
+
+        article {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
         .post-date {
-            color: var(--color-date);
+            color: var(--text-secondary);
             font-size: 1rem;
-            font-weight: 400;
             margin-bottom: 1.5rem;
             display: block;
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             line-height: 1.2;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            letter-spacing: -0.5px;
-        }
-
-        article {
-            margin-bottom: 6rem;
+            margin-bottom: 2rem;
+            color: var(--text);
         }
 
         .post-content {
-            font-size: 1.125rem;
+            font-size: 1.2rem;
             line-height: 1.7;
         }
 
         .post-content h2 {
             font-size: 2rem;
-            font-weight: 700;
             margin: 3rem 0 1.5rem;
-            letter-spacing: -0.3px;
+            color: var(--text);
         }
 
         .post-content h3 {
             font-size: 1.5rem;
-            font-weight: 600;
             margin: 2rem 0 1rem;
-            letter-spacing: -0.2px;
+            color: var(--text);
         }
 
         .post-content p {
             margin-bottom: 1.5rem;
+            color: var(--text-secondary);
         }
 
         .post-content ul, .post-content ol {
             margin: 2rem 0;
             padding-left: 1.5rem;
+            color: var(--text-secondary);
         }
 
         .post-content li {
@@ -203,15 +145,16 @@
         code {
             font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
             font-size: 0.9em;
-            background: #f5f5f5;
+            background: rgba(255, 255, 255, 0.1);
             padding: 0.2em 0.4em;
             border-radius: 3px;
+            color: var(--accent);
         }
 
         pre {
-            background: #f5f5f5;
+            background: rgba(255, 255, 255, 0.05);
             padding: 1.5rem;
-            border-radius: 5px;
+            border-radius: 12px;
             overflow-x: auto;
             margin: 2rem 0;
         }
@@ -221,63 +164,82 @@
             padding: 0;
         }
 
-        @media (max-width: 768px) {
-            body {
-                font-size: 16px;
-            }
+        /* Post preview styles */
+        .post-preview {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
 
+        .post-preview:hover {
+            transform: translateY(-2px);
+        }
+
+        .post-preview h2 {
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .post-preview a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .post-preview p {
+            color: var(--text-secondary);
+        }
+
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
             .container {
                 padding: 0 1.5rem;
-            }
-
-            .site-header {
-                padding: 0 1.5rem;
-            }
-
-            .intro h1 {
-                font-size: 2.5rem;
-            }
-
-            .intro p {
-                font-size: 1.25rem;
-            }
-
-            .post-preview {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
-
-            .post-preview .post-date {
-                padding-top: 0;
-            }
-
-            .post-preview h2 {
-                font-size: 1.75rem;
             }
 
             h1 {
                 font-size: 2.5rem;
             }
+
+            .post-content {
+                font-size: 1.1rem;
+            }
+
+            nav {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="site-header">
-            <a href="/" class="site-title">smith.</a>
-            <nav>
-                <a href="/">Home</a>
-                <a href="/about.html">About</a>
-                <a href="/pl.html">Players Lounge</a>
-            </nav>
+    <nav>
+        <a href="/" class="logo">MG</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/#work">Work</a>
+            <a href="/about.html">About</a>
+            <a href="/#blog">Blog</a>
+            <a href="/#contact" class="contact-button">Contact Me</a>
         </div>
-    </header>
+    </nav>
 
-    <div class="container">
-        <main>
+    <main>
+        <div class="container">
             <article>
-    <time class="post-date">3/19/2024</time>
-    <h1>Privacy Policy</h1>
+    <div class="post-header">
+        <time class="post-date">3/19/2024</time>
+        <h1>Privacy Policy</h1>
+    </div>
     <div class="post-content">
         <h1>Privacy Policy</h1>
 <p>Last updated: March 20, 2024</p>
@@ -310,7 +272,13 @@
 
     </div>
 </article> 
-        </main>
-    </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Matthias Groo. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html> 

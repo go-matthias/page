@@ -57,7 +57,6 @@ const build = async () => {
   try {
     // Read templates
     const layoutTemplate = fs.readFileSync(path.join(templateDir, 'layout.html'), 'utf8');
-    const homeTemplate = fs.readFileSync(path.join(templateDir, 'home.html'), 'utf8');
     const postTemplate = fs.readFileSync(path.join(templateDir, 'post.html'), 'utf8');
 
     // Get all markdown files
@@ -77,29 +76,26 @@ const build = async () => {
       })
       .sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by date, newest first
 
-    // Generate home page
-    const homeContent = generateHTML(homeTemplate, {
-      title: 'My Personal Blog',
-      posts: posts.map(post => `
-        <article class="post-preview">
-          <time class="post-date">${new Date(post.date).toLocaleDateString('en-US', { 
-            month: 'numeric',
-            day: 'numeric',
-            year: 'numeric'
-          }).replace(/\//g, '/')}</time>
-          <div>
-            <h2><a href="${post.url}">${post.title}</a></h2>
-            ${post.excerpt ? `<p>${post.excerpt}</p>` : ''}
-          </div>
-        </article>
-      `).join('')
-    });
+    // Generate posts HTML for homepage
+    const postsHTML = posts.map(post => `
+      <article class="post-preview">
+        <time class="post-date">${new Date(post.date).toLocaleDateString('en-US', { 
+          month: 'numeric',
+          day: 'numeric',
+          year: 'numeric'
+        }).replace(/\//g, '/')}</time>
+        <div>
+          <h2><a href="${post.url}">${post.title}</a></h2>
+          ${post.excerpt ? `<p>${post.excerpt}</p>` : ''}
+        </div>
+      </article>
+    `).join('');
 
-    const homePage = generateHTML(layoutTemplate, {
-      title: 'Home - My Personal Blog',
-      content: homeContent
+    // Copy custom homepage
+    const customHomepage = fs.readFileSync(path.join(pagesDir, 'index.html'), 'utf8');
+    const homePage = generateHTML(customHomepage, {
+      posts: postsHTML
     });
-
     fs.writeFileSync(path.join('dist', 'index.html'), homePage);
 
     // Generate individual post pages
@@ -123,21 +119,31 @@ const build = async () => {
     });
 
     // Generate pages from pages directory
-    const pageFiles = fs.readdirSync(pagesDir).filter(file => file.endsWith('.md'));
+    const pageFiles = fs.readdirSync(pagesDir)
+      .filter(file => file.endsWith('.md') || (file.endsWith('.html') && file !== 'index.html'));
+    
     pageFiles.forEach(file => {
-      const data = processMarkdown(path.join(pagesDir, file));
-      const pageContent = generateHTML(postTemplate, {
-        title: data.title,
-        content: data.content
-      });
+      if (file.endsWith('.md')) {
+        const data = processMarkdown(path.join(pagesDir, file));
+        const pageContent = generateHTML(postTemplate, {
+          title: data.title,
+          content: data.content
+        });
 
-      const page = generateHTML(layoutTemplate, {
-        title: `${data.title} - My Personal Blog`,
-        content: pageContent
-      });
+        const page = generateHTML(layoutTemplate, {
+          title: `${data.title} - My Personal Blog`,
+          content: pageContent
+        });
 
-      const outputFile = file.replace('.md', '.html');
-      fs.writeFileSync(path.join('dist', outputFile), page);
+        const outputFile = file.replace('.md', '.html');
+        fs.writeFileSync(path.join('dist', outputFile), page);
+      } else if (file.endsWith('.html')) {
+        // Copy HTML files directly
+        fs.copyFileSync(
+          path.join(pagesDir, file),
+          path.join('dist', file)
+        );
+      }
     });
 
     console.log('Build completed successfully!');
