@@ -91,12 +91,19 @@ const build = async () => {
       </article>
     `).join('');
 
-    // Copy custom homepage
-    const customHomepage = fs.readFileSync(path.join(pagesDir, 'index.html'), 'utf8');
-    const homePage = generateHTML(customHomepage, {
-      posts: postsHTML
+    // Read homepage content
+    const homepageContent = fs.readFileSync(path.join(pagesDir, 'index.html'), 'utf8');
+    
+    // Generate homepage with layout
+    const homepage = generateHTML(layoutTemplate, {
+      title: 'Matthias Groo - B2B Marketing Expert',
+      content: generateHTML(homepageContent, {
+        posts: postsHTML
+      })
     });
-    fs.writeFileSync(path.join('dist', 'index.html'), homePage);
+    
+    // Write homepage
+    fs.writeFileSync(path.join('dist', 'index.html'), homepage);
 
     // Generate individual post pages
     posts.forEach(post => {
@@ -138,11 +145,13 @@ const build = async () => {
         const outputFile = file.replace('.md', '.html');
         fs.writeFileSync(path.join('dist', outputFile), page);
       } else if (file.endsWith('.html')) {
-        // Copy HTML files directly
-        fs.copyFileSync(
-          path.join(pagesDir, file),
-          path.join('dist', file)
-        );
+        // For HTML files, wrap them in the layout template
+        const pageContent = fs.readFileSync(path.join(pagesDir, file), 'utf8');
+        const page = generateHTML(layoutTemplate, {
+          title: 'Page',
+          content: pageContent
+        });
+        fs.writeFileSync(path.join('dist', file), page);
       }
     });
 
